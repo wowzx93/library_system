@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DAO.UserDao">
+	<select id="userIsExist" resultType="int">
+		select 
+			count(user_name)
+		from
+			user
+		where
+			user_name = #{userName}
+	</select>
+	
+	<select id="sign" resultType="User">
+		select
+			user_id,user_name,user_pwd,user_status
+		from
+			user
+		where user_name = #{userName}
+		and	user_pwd = #{userPwd}
+	</select>
+	
+	<delete id="reduceUser">
+		delete
+		from
+			user
+		where user_name = #{userName}
+	</delete>
+	
+	<insert id="addUser">
+		insert into
+			user(user_name,user_pwd)
+		values
+		(#{userName},#{userPwd})
+	</insert>
+	
+	<update id="setUserStatus">
+		update
+			user
+		set
+			user_status = #{newStatus}
+		where user_name = #{userName}
+	</update>
+	
+	<select id="queryAll" resultType="User">
+		select
+			user_id,user_name,user_status
+		from
+			user
+		order by user_name
+	</select>
+	
+	<select id="queryAllByOneStatus" resultType="User">
+		select
+			user_id,user_name,user_status
+		from
+			user
+		where user_status=#{userStatus}
+		order by user_name
+	</select>
+</mapper>
